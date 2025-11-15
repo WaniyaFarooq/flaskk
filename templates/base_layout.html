@@ -1,3 +1,45 @@
-{% with message = get_flashed_messages() %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {%block title %}  my feedback site {% endblock %}
+    </title>
+    <style>
+        body{
+            background-color: aquamarine;
+        }
+        header,footer{
+            background-color: orange;
 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Feedback page</h1>
+        <nav>
+            <a href="/">home</a>
+            
+        </nav>
+    </header>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul style="color:green">
+    {%   for msg in messages   %}
+         <li>{{ msg }}</li>
+             {% endfor %}
+            </ul>
+    {% endif %}
 {% endwith %}
+
+{% block  content %}{% endblock  %}
+    <footer>
+        <p>
+            ok bye waniys
+        </p>
+    </footer>
+</body>
+</html>

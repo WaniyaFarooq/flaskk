@@ -1,24 +1,23 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,redirect,url_for,flash
 
 app = Flask(__name__)
-@app.route("/")
-def student_profile():
-    return render_template(
-        "profile.html",name = "Waniya",
-        is_Topper = True,
-        subjects = {"Maths","Science","History"}
-    )
-@app.route("/chalchal")
-def chalchal():
-    return render_template("child.html")
+app.secret_key = "my-secret-key"
 
-
-@app.route("/feedback",methods=["POST","GET"])
-def feedback():
+@app.route("/",methods=["POST","GET"])
+def form():
     if request.method =="POST":
         name = request.form.get("username")
-        message = request.form.get("message")
+        if not name:
+            flash("Name cannot be empty")
+            return redirect(url_for("form"))
+        flash(f"Thanks {name}, your feedback is saved")
 
-        return render_template("thankyou.html",user =name,message=message)
+        return redirect(url_for("thankyou", user=name))
+
     
     return render_template("feedback.html")
+
+@app.route("/thankyou")
+def thankyou():
+    user = request.args.get("user")
+    return render_template("thankyou.html", user=user)
