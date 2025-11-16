@@ -3,15 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>   {% block title  %} My Website{% endblock  %}</title>
+    <title>   {% block title  %} Flask WTF Forms {% endblock  %}</title>
 </head>
 <body>
-      <!-- Navbar (common for all pages) -->
-    <nav>
-        <a href="/">Home</a> |
-        <a href="/about">About</a> |
-        <a href="/contact">Contact</a>
-    </nav>
+ 
+    {% with messages=get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+ {# ('success','succesfuallydone') #}
+
+    {% for category,msg in messages  %}
+  <p style="color: {{ 'green' if category == 'success' else 'red' }}">
+    {{ msg }}
+</p>
+
+    {% endfor %}
+
+
+    {% endif %}
+    
+    {% endwith %}
 
 {% block content %}
 
